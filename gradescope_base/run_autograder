@@ -1,25 +1,36 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-# make_assignment.sh will replace the lines here, DO NOT REMOVE
+# make_assignment.sh will replace the lines below, DO NOT REMOVE
 REPLACE_NAME
-REPLACE_SOLUTION
+REPLACE_SOLUTION_DIR
 REPLACE_REPO_NAME
 
-BASE_DIR=/autograder/$REPO_NAME
+# Always run setup first (installs python, pulls repo, installs requirements)
+bash setup.sh
 
-# update git repo
-cd $BASE_DIR
-git pull
-# I think the next line is only necessary if you change the requirements after the first version of the assignment
-pip3 install -r $BASE_DIR/requirements.txt
+ASSIGN_DIR="/autograder/$REPO_NAME/$NAME"
+DEST="$ASSIGN_DIR/$SOLUTION_DIR"
+SUB="/autograder/submission"
 
-# change to assignment directory
-cd $BASE_DIR/$NAME
+# Ensure the destination 'solution/' is clean and present
+rm -rf "$DEST"
+mkdir -p "$DEST"
 
-# delete any solution files or folders in the git repo
-rm -rf $SOLUTION
+# If the student submitted a 'solution/' folder, copy it.
+# Otherwise, copy all top-level .py files into the destination.
+if [ -d "$SUB/$SOLUTION_DIR" ]; then
+  rsync -a --delete "$SUB/$SOLUTION_DIR"/ "$DEST"/
+else
+  shopt -s nullglob
+  cp -f "$SUB"/*.py "$DEST"/ || true
+  shopt -u nullglob
+fi
 
-# copy student submission to folder
-cp -r /autograder/submission/$SOLUTION ./
+# Guarantee 'solution' is importable even if students didn't include __init__.py
+touch "$DEST/__init__.py"
 
-python3 $BASE_DIR/gradescope_base/run_tests.py
+# Run tests (Gradescope expects results at /autograder/results/results.json)
+python3 "/autograder/$REPO_NAME/run_tests.py" \
+  --assignment "$NAME" \
+  --solution-dir "$DEST"
