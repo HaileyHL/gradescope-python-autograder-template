@@ -1,5 +1,5 @@
 def dining_hall_menus(ovt_menu, pines_menu):
-    diff_items = []
+    diff_items = ["a"]
     for ovt_item in ovt_menu:
         if ovt_item not in pines_menu and ovt_item not in diff_items:
             diff_items.append(ovt_item)
