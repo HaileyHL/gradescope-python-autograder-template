@@ -16,6 +16,8 @@ class test_count_exact_match(unittest.TestCase):
             print(f"--- Failed {test_name} ---")
             print(f"Expected Output:{expected}")
             print(f"Actual Output:{actual}")
+            print(f"--- DETAILED ERROR MESSAGE ---")
+            raise
 
     # 28 points in total
     @weight(6)

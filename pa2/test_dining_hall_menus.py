@@ -16,8 +16,9 @@ class test_dining_hall_menus(unittest.TestCase):
             return stu
         except Exception as e:
             print(f"Error calling function with the parameters {inputs}.")
-            print(f"ERROR:{e}")
             print("Please double check your implementation.")
+            print(f"--- DETAILED ERROR MESSAGE ---")
+            raise
 
     def assert_equal_with_message(self, test_name, inputs, expected, actual):
         try:
@@ -27,6 +28,8 @@ class test_dining_hall_menus(unittest.TestCase):
             print(f"Parameters:{inputs}")
             print(f"Expected Output:{expected}")
             print(f"Actual Output:{actual}")
+            print(f"--- DETAILED ERROR MESSAGE ---")
+            raise
 
 
     # 40 points in total
