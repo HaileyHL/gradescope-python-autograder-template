@@ -10,12 +10,21 @@ except Exception as e:
 
 class test_dining_hall_menus(unittest.TestCase):
 
+    def run_dining_hall_menus(self, inputs):
+        try:
+            stu = dining_hall_menus(inputs[0], inputs[1])
+            return stu
+        except Exception as e:
+            print(f"Error calling function with the parameters {inputs}.")
+            print(f"ERROR:{e}")
+            print("Please double check your implementation.")
+
     def assert_equal_with_message(self, test_name, inputs, expected, actual):
         try:
             self.assertEqual(actual, expected)
         except AssertionError:
             print(f"--- Failed {test_name} ---")
-            print(f"Inputs:{inputs}")
+            print(f"Parameters:{inputs}")
             print(f"Expected Output:{expected}")
             print(f"Actual Output:{actual}")
 
@@ -23,65 +32,74 @@ class test_dining_hall_menus(unittest.TestCase):
     # 40 points in total
     @weight(5)
     def test_1(self):
-        stu = dining_hall_menus(['pizza', 'spaghetti', 'salad', 'fries'], ['burgers', 'sushi', 'fries', 'pizza'])
+        inputs = (['pizza', 'spaghetti', 'salad', 'fries'], ['burgers', 'sushi', 'fries', 'pizza'])
+        stu = self.run_dining_hall_menus(inputs)
         expected_list = ['spaghetti', 'salad', 'burgers', 'sushi']
-        self.assert_equal_with_message("Test normal case 1",
-                                       (['pizza', 'spaghetti', 'salad', 'fries'], ['burgers', 'sushi', 'fries', 'pizza']),
+        self.assert_equal_with_message("Test normal case 1", inputs,
                                        sorted(expected_list), sorted(stu))
 
     @weight(5)
     def test_2(self):
-        stu = dining_hall_menus(['pizza'], ['PIZZA'])
+        inputs = (['pizza'], ['PIZZA'])
+        stu = self.run_dining_hall_menus(inputs)
         expected_list = ['pizza', 'PIZZA']
-        self.assert_equal_with_message("Test normal case 2", (['pizza'], ['PIZZA']), sorted(expected_list), sorted(stu))
+        self.assert_equal_with_message("Test normal case 2", inputs, sorted(expected_list), sorted(stu))
 
     @weight(5)
     def test_3(self):
-        stu = dining_hall_menus(['sushi'], ['fries'])
+        inputs = (['sushi'], ['fries'])
+        stu = self.run_dining_hall_menus(inputs)
         expected_list = ['sushi', 'fries']
-        self.assert_equal_with_message("Test normal case 3", (['sushi'], ['fries']), sorted(expected_list), sorted(stu))
+        self.assert_equal_with_message("Test normal case 3", inputs, sorted(expected_list), sorted(stu))
 
     @weight(5)
     def test_4(self):
-        stu = dining_hall_menus(['fried rice', 'noodles', 'chicken'], ['chicken fried rice', 'noodles'])
+        inputs = (['fried rice', 'noodles', 'chicken'], ['chicken fried rice', 'noodles'])
+        stu = self.run_dining_hall_menus(inputs)
         expected_list = ['fried rice', 'chicken', 'chicken fried rice']
-        self.assert_equal_with_message("Test normal case 4", (['fried rice', 'noodles', 'chicken'], ['chicken fried rice', 'noodles']), sorted(expected_list), sorted(stu))
+        self.assert_equal_with_message("Test normal case 4", inputs, sorted(expected_list), sorted(stu))
 
     @weight(4)
     def test_5(self):
-        stu = dining_hall_menus(['pizza', 'salad', 'salad'], ['pizza'])
+        inputs = (['pizza', 'salad', 'salad'], ['pizza'])
+        stu = self.run_dining_hall_menus(inputs)
         expected_list = ['salad']
-        self.assert_equal_with_message("Test duplicate case 5", (['pizza', 'salad', 'salad'], ['pizza']), sorted(expected_list), sorted(stu))
+        self.assert_equal_with_message("Test duplicate case 5", inputs, sorted(expected_list), sorted(stu))
 
     @weight(4)
     def test_6(self):
-        stu = dining_hall_menus(['pasta', 'pasta', 'PASTA'], ['pasta'])
+        inputs = (['pasta', 'pasta', 'PASTA'], ['pasta'])
+        stu = self.run_dining_hall_menus(inputs)
         expected_list = ['PASTA']
-        self.assert_equal_with_message("Test duplicate case 6", (['pasta', 'pasta', 'PASTA'], ['pasta']),sorted(expected_list), sorted(stu))
+        self.assert_equal_with_message("Test duplicate case 6", inputs,sorted(expected_list), sorted(stu))
 
     @weight(3)
     def test_7(self):
-        stu = dining_hall_menus([], [])
+        inputs = ([], [])
+        stu = self.run_dining_hall_menus(inputs)
         expected_list = []
-        self.assert_equal_with_message("Test both empty 7",([], []), expected_list, stu)
+        self.assert_equal_with_message("Test both empty 7",inputs, expected_list, stu)
 
     @weight(3)
     def test_8(self):
-        stu = dining_hall_menus([], ['fries', 'fries'])
+        inputs = ([], ['fries', 'fries'])
+        stu = self.run_dining_hall_menus(inputs)
         expected_list = ['fries']
-        self.assert_equal_with_message("Test empty case 8", ([], ['fries', 'fries']), sorted(expected_list), sorted(stu))
+        self.assert_equal_with_message("Test empty case 8", inputs, sorted(expected_list), sorted(stu))
 
     @weight(3)
     def test_9(self):
-        stu = dining_hall_menus(['sushi', 'sushi'], ['sushi', 'sushi'])
+        inputs = (['sushi', 'sushi'], ['sushi', 'sushi'])
+        stu = self.run_dining_hall_menus(inputs)
         expected_list = []
-        self.assert_equal_with_message("Test same menus case 9", (['sushi', 'sushi'], ['sushi', 'sushi']), expected_list, stu)
+        self.assert_equal_with_message("Test same menus case 9", inputs, expected_list, stu)
 
     @weight(3)
     def test_10(self):
-        stu = dining_hall_menus(['burgers'], [''])
+        inputs = (['burgers'], [''])
+        stu = self.run_dining_hall_menus(inputs)
         expected_list = ['burgers', '']
-        self.assert_equal_with_message("Test empty string case 10", (['burgers'], ['']), sorted(expected_list), sorted(stu))
+        self.assert_equal_with_message("Test empty string case 10", inputs, sorted(expected_list), sorted(stu))
 
 if __name__ == '__main__':
     unittest.main()
