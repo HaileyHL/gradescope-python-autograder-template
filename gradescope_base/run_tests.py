@@ -1,6 +1,5 @@
 import argparse
 import unittest
-import _sysconfigdata__darwin_darwin
 
 from gradescope_utils.autograder_utils.json_test_runner import JSONTestRunner
 
