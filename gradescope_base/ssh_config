@@ -1,3 +1,3 @@
 host github.com
-  IdentityFile ~/.ssh/deploy_key
+  IdentityFile ~/.ssh/key
   IdentitiesOnly yes
