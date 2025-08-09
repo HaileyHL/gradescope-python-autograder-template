@@ -29,7 +29,7 @@ class test_validate_email(unittest.TestCase):
             print(f"Parameters:{inputs}")
             print(f"Expected Output:{expected}")
             print(f"Actual Output:{actual}")
-            print(f"--- DETAILED ERROR MESSAGE ---")
+            print(f"\n--- DETAILED ERROR MESSAGE ---")
             raise
 
     # 32 points in total
