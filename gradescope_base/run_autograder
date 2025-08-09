@@ -32,6 +32,9 @@ cp -r /autograder/submission/* ./
 echo "Files in solution directory after copy:"
 ls
 
+# Go back to the assignment root
+cd "$BASE_DIR/$NAME"
+
 # Run tests
 echo "Running test runner"
 python3 "$BASE_DIR/gradescope_base/run_tests.py"
