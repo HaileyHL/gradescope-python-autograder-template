@@ -19,7 +19,7 @@ pip3 install -r $BASE_DIR/requirements.txt
 cd $BASE_DIR/$NAME
 
 # delete any solution files or folders in the git repo
-rm -rf $SOLUTION
+rm -rf "$SOLUTION"/*
 
 # copy student submission to folder
 cp -r /autograder/submission/* ./
