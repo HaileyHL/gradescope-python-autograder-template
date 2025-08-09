@@ -6,9 +6,6 @@ REPLACE_NAME
 REPLACE_SOLUTION_DIR
 REPLACE_REPO_NAME
 
-# 1) System/setup (installs Python, pulls your private repo, installs deps)
-bash setup.sh
-
 ASSIGN_DIR="/autograder/$REPO_NAME/$NAME"
 DEST="$ASSIGN_DIR/$SOLUTION_DIR"
 SUB="/autograder/submission"
