@@ -8,7 +8,8 @@ from gradescope_utils.autograder_utils.decorators import weight, visibility
 try:
     from solution.dining_hall_menus import dining_hall_menus
 except Exception as e:
-    raise Exception(f'Couldnt import your function dining_hall_menus from files. Please double check your file name and function name.')
+    print(f'Couldnt import your function dining_hall_menus from files. Please double check your file name and function name.')
+    dining_hall_menus = None
 
 
 # Tests for count_exact_match
