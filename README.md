@@ -57,4 +57,4 @@ So your code on gradescope needs to be able to pull your repo with the assignmen
 
 Once you set this up and upload an assignment for the first time, everything is done! You just need to push your changes to your repo and they will be pulled any time a test is run so your students always get the latest updates to your tests. No need to interact with gradescope, all changes you make to your repo will be pulled by gradescope before autograding
 
-The only time you should need to re-run `make_assignment.sh` and reupload the assignment on gradescope is if you change the name of the assignment (`$name`) or the name of the solution (`$solution`)
+The only time you should need to re-run `make_assignment.sh` and reupload the assignment on gradescope is if you change the name of the assignment (`$name`) or the name of the solution (`$solution`).
