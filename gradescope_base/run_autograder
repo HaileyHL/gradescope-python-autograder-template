@@ -1,30 +1,25 @@
 #!/usr/bin/env bash
-set -euo pipefail
 
-# Replaced by make_assignment.sh
+# make_assignment.sh will replace the lines here, DO NOT REMOVE
 REPLACE_NAME
-REPLACE_SOLUTION_DIR
+REPLACE_SOLUTION
 REPLACE_REPO_NAME
 
-ASSIGN_DIR="/autograder/$REPO_NAME/$NAME"
-DEST="$ASSIGN_DIR/$SOLUTION_DIR"
-SUB="/autograder/submission"
+BASE_DIR=/autograder/$REPO_NAME
 
-# 2) Prepare student's solution folder
-rm -rf "$DEST"
-mkdir -p "$DEST"
+# update git repo
+cd $BASE_DIR
+git pull
+# I think the next line is only necessary if you change the requirements after the first version of the assignment
+pip3 install -r $BASE_DIR/requirements.txt
 
-# If the student uploaded a folder named 'solution', use it; otherwise copy top-level .py files
-if [ -d "$SUB/$SOLUTION_DIR" ]; then
-  rsync -a --delete "$SUB/$SOLUTION_DIR"/ "$DEST"/
-else
-  shopt -s nullglob
-  cp -f "$SUB"/*.py "$DEST"/ || true
-  shopt -u nullglob
-fi
-touch "$DEST/__init__.py"   # make it importable as a package
+# change to assignment directory
+cd $BASE_DIR/$NAME
 
-# 3) Run tests (writes /autograder/results/results.json)
-python3 "/autograder/$REPO_NAME/run_tests.py" \
-  --assignment "$NAME" \
-  --solution-dir "$DEST"
+# delete any solution files or folders in the git repo
+rm -rf $SOLUTION
+
+# copy student submission to folder
+cp -r /autograder/submission/$SOLUTION ./
+
+python3 $BASE_DIR/gradescope_base/run_tests.py

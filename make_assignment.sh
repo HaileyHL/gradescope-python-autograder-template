@@ -1,37 +1,32 @@
 #!/usr/bin/env bash
 
 # CHANGE THESE FOR YOUR REPO!
-GITHUB_REPO='git@github.com:HaileyHL/gradescope-python-autograder-template.git'
-REPO_NAME="gradescope-python-autograder-template"
+GITHUB_REPO='git@github.com:mnoukhov/gradescope-autograder-template.git'
+REPO_NAME="gradescope-autograder-template"
 
-# usage: ./make_assignment.sh <assignment_name>
-name=${1:-}
-if [ -z "${name}" ]; then
-  echo "Usage: $0 <assignment_name>"
-  exit 1
-fi
 
-# we always use a folder named 'solution' now
-solution_dir="solution"
+# input the assignment number and the file that students have to fill out
+name=$1
 
-# delete previous file if any
-rm -f "$name.zip"
+# make sure to always include a soution folder.
+solution="solution"
 
-# stage files for the zip
-mkdir -p "zip_$name"
+# delete previous files if any
+rm $name.zip
 
-# copy everything Gradescope needs
-cp gradescope_base/* "zip_$name/"            # run_autograder, ssh_config, deploy_key, etc.
-cp setup.sh "zip_$name/setup.sh"             # <-- ensure setup.sh is included
+# copy all files necessary for assignment
+# make sure you have copied your deploy key to gradescope_base/
+mkdir -p zip_$name
+cp gradescope_base/* zip_$name/
 
-# inject variables into run_autograder and setup.sh
-sed "s/REPLACE_NAME/NAME=$name/"                    "zip_$name/run_autograder" > /tmp/run_autograder && mv /tmp/run_autograder "zip_$name/run_autograder"
-sed "s/REPLACE_SOLUTION_DIR/SOLUTION_DIR=$solution_dir/" "zip_$name/run_autograder" > /tmp/run_autograder && mv /tmp/run_autograder "zip_$name/run_autograder"
-sed "s/REPLACE_REPO_NAME/REPO_NAME=$REPO_NAME/"     "zip_$name/run_autograder" > /tmp/run_autograder && mv /tmp/run_autograder "zip_$name/run_autograder"
+# add assignment name and solution filename to run_autograder
+sed "s/REPLACE_NAME/NAME=$name/" zip_$name/run_autograder > /tmp/run_autograder && mv /tmp/run_autograder zip_$name/run_autograder
+sed "s/REPLACE_SOLUTION/SOLUTION=$solution/" zip_$name/run_autograder > /tmp/run_autograder && mv /tmp/run_autograder zip_$name/run_autograder
+sed "s/REPLACE_REPO_NAME/REPO_NAME=$REPO_NAME/" zip_$name/run_autograder > /tmp/run_autograder && mv /tmp/run_autograder zip_$name/run_autograder
 
-sed "s/REPLACE_REPO_NAME/REPO_NAME=$REPO_NAME/"     "zip_$name/setup.sh" > /tmp/setup.sh && mv /tmp/setup.sh "zip_$name/setup.sh"
-sed "s,REPLACE_GITHUB_REPO,GITHUB_REPO=$GITHUB_REPO," "zip_$name/setup.sh" > /tmp/setup.sh && mv /tmp/setup.sh "zip_$name/setup.sh"
+sed "s/REPLACE_REPO_NAME/REPO_NAME=$REPO_NAME/" zip_$name/setup.sh > /tmp/setup.sh && mv /tmp/setup.sh zip_$name/setup.sh
+sed "s,REPLACE_GITHUB_REPO,GITHUB_REPO=$GITHUB_REPO," zip_$name/setup.sh > /tmp/setup.sh && mv /tmp/setup.sh zip_$name/setup.sh
 
-# zip (flatten) and clean up
-zip -r -m -j "$name.zip" "zip_$name"/*
-rmdir "zip_$name"
+# zip the assignement and delete folder
+zip -r -m -j $name.zip zip_$name/*
+rmdir zip_$name
