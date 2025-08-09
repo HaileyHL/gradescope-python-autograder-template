@@ -1,5 +1,6 @@
 import argparse
 import unittest
+import sys
 
 from gradescope_utils.autograder_utils.json_test_runner import JSONTestRunner
 
