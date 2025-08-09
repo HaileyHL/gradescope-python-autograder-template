@@ -4,13 +4,10 @@ from gradescope_utils.autograder_utils.decorators import weight, visibility
 
 try:
     from solution.count_exact_match import count_exact_match
-except ImportError:
-    print("Could not import count_exact_match. Check your file and function names.")
-    count_exact_match = None
+except Exception:
+    raise Exception(f'Couldnt import your function validate_email from files. Please double check your file name and function name.') from None
 
-# Tests for count_exact_match
-@unittest.skipIf(count_exact_match is None,
-                 "count_exact_match could not be imported, skipping relevant test cases.")
+
 class test_count_exact_match(unittest.TestCase):
     def assert_equal_with_message(self, test_name, expected, actual):
         try:

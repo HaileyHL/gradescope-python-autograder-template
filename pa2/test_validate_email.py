@@ -5,7 +5,7 @@ from gradescope_utils.autograder_utils.decorators import weight, visibility
 try:
     from solution.validate_email import validate_email
 except Exception as e:
-    raise Exception(f'Couldnt import your function validate_email from files. Please double check your file name and function name.')
+    raise Exception(f'Couldnt import your function validate_email from files. Please double check your file name and function name.') from None
 
 
 
@@ -20,7 +20,7 @@ def assert_equal_with_message(testcase, test_name, expected, actual):
 
 # Tests for validate_email
 class test_validate_email(unittest.TestCase):
-    # 33 points in total
+    # 32 points in total
     @weight(4)
     def test_validate_email1(self):
         stu = validate_email("abc@gmail.com", "gmail.com")
