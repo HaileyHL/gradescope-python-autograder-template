@@ -20,6 +20,6 @@ cd $BASE_DIR/$NAME
 rm -rf $SOLUTION
 
 # copy student submission to folder
-cp -r /autograder/submission/$SOLUTION ./
+cp -r /autograder/submission/* ./
 
 python3 $BASE_DIR/gradescope_base/run_tests.py
