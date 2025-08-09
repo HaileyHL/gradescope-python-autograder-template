@@ -15,26 +15,24 @@ git pull
 # I think the next line is only necessary if you change the requirements after the first version of the assignment
 pip3 install -r $BASE_DIR/requirements.txt
 
-# change to assignment directory
-cd $BASE_DIR/$NAME/$SOLUTION
+# Go to the solution directory
+cd "$BASE_DIR/$NAME/$SOLUTION"
 
-echo "Current directory:"
-echo $(pwd)
-# delete any solution files or folders in the git repo
-rm -rf "$SOLUTION"/*
+echo "Current directory: $(pwd)"
 
-echo "Removing colusion files"
-echo "Current directory:"
-echo $(pwd)
-echo "Files:"
-echo $(ls)
+# Remove all existing files in the solution folder
+echo "Removing solution files"
+rm -rf ./*
 
-# copy student submission to folder
+# Copy student submission into the solution folder
 echo "Copying student submissions over"
 cp -r /autograder/submission/* ./
-echo "Files:"
-echo $(ls)
 
+# List files to confirm
+echo "Files in solution directory after copy:"
+ls
+
+# Run tests
 echo "Running test runner"
-python3 $BASE_DIR/gradescope_base/run_tests.py
+python3 "$BASE_DIR/gradescope_base/run_tests.py"
 echo "Done running test runner"
