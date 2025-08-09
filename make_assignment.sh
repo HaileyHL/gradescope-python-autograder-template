@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # CHANGE THESE FOR YOUR REPO!
-GITHUB_REPO='git@github.com:mnoukhov/gradescope-autograder-template.git'
-REPO_NAME="gradescope-autograder-template"
+GITHUB_REPO='git@github.com:HaileyHL/gradescope-python-autograder-template.git'
+REPO_NAME="gradescope-python-autograder-template"
 
 
 # input the assignment number and the file that students have to fill out
