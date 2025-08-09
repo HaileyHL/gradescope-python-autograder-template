@@ -11,14 +11,12 @@ except Exception as e:
 # Tests for validate_email
 class test_validate_email(unittest.TestCase):
 
-    def assert_equal_with_message(self,inputs, test_name, expected, actual):
+    def assert_equal_with_message(self, test_name, inputs, expected, actual):
         try:
             self.assertEqual(actual, expected)
         except AssertionError:
             print(f"--- Failed {test_name} ---")
             print(f"Inputs:{inputs}")
-            print(f"Expected Output:{expected}")
-            print(f"Actual Output:{actual}")
             raise
 
     # 32 points in total
