@@ -9,7 +9,7 @@ REPO_NAME="gradescope-python-autograder-template"
 name=$1
 
 # make sure to always include a soution folder.
-solution="solution"
+solution=${2:-"solution.py"}
 
 # delete previous files if any
 rm $name.zip
