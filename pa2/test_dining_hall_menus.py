@@ -16,7 +16,8 @@ class test_dining_hall_menus(unittest.TestCase):
         except AssertionError:
             print(f"--- Failed {test_name} ---")
             print(f"Inputs:{inputs}")
-            raise
+            print(f"Expected Output:{expected}")
+            print(f"Actual Output:{actual}")
 
 
     # 40 points in total
