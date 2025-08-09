@@ -7,6 +7,8 @@ REPLACE_REPO_NAME
 
 BASE_DIR=/autograder/$REPO_NAME
 
+echo "BASE_DIR = $BASE_DIR"
+
 # update git repo
 cd $BASE_DIR
 git pull
@@ -22,4 +24,6 @@ rm -rf $SOLUTION
 # copy student submission to folder
 cp -r /autograder/submission/* ./
 
+echo "Running test runner"
 python3 $BASE_DIR/gradescope_base/run_tests.py
+echo "Done running test runner"
