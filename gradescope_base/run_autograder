@@ -1,24 +1,23 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# make_assignment.sh will replace the lines below, DO NOT REMOVE
+# Replaced by make_assignment.sh
 REPLACE_NAME
 REPLACE_SOLUTION_DIR
 REPLACE_REPO_NAME
 
-# Always run setup first (installs python, pulls repo, installs requirements)
+# 1) System/setup (installs Python, pulls your private repo, installs deps)
 bash setup.sh
 
 ASSIGN_DIR="/autograder/$REPO_NAME/$NAME"
 DEST="$ASSIGN_DIR/$SOLUTION_DIR"
 SUB="/autograder/submission"
 
-# Ensure the destination 'solution/' is clean and present
+# 2) Prepare student's solution folder
 rm -rf "$DEST"
 mkdir -p "$DEST"
 
-# If the student submitted a 'solution/' folder, copy it.
-# Otherwise, copy all top-level .py files into the destination.
+# If the student uploaded a folder named 'solution', use it; otherwise copy top-level .py files
 if [ -d "$SUB/$SOLUTION_DIR" ]; then
   rsync -a --delete "$SUB/$SOLUTION_DIR"/ "$DEST"/
 else
@@ -26,11 +25,9 @@ else
   cp -f "$SUB"/*.py "$DEST"/ || true
   shopt -u nullglob
 fi
+touch "$DEST/__init__.py"   # make it importable as a package
 
-# Guarantee 'solution' is importable even if students didn't include __init__.py
-touch "$DEST/__init__.py"
-
-# Run tests (Gradescope expects results at /autograder/results/results.json)
+# 3) Run tests (writes /autograder/results/results.json)
 python3 "/autograder/$REPO_NAME/run_tests.py" \
   --assignment "$NAME" \
   --solution-dir "$DEST"
