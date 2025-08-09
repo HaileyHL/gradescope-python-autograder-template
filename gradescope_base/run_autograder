@@ -16,13 +16,24 @@ git pull
 pip3 install -r $BASE_DIR/requirements.txt
 
 # change to assignment directory
-cd $BASE_DIR/$NAME
+cd $BASE_DIR/$NAME/$SOLUTION
 
+echo "Current directory:"
+echo $(pwd)
 # delete any solution files or folders in the git repo
 rm -rf "$SOLUTION"/*
 
+echo "Removing colusion files"
+echo "Current directory:"
+echo $(pwd)
+echo "Files:"
+echo $(ls)
+
 # copy student submission to folder
+echo "Copying student submissions over"
 cp -r /autograder/submission/* ./
+echo "Files:"
+echo $(ls)
 
 echo "Running test runner"
 python3 $BASE_DIR/gradescope_base/run_tests.py
