@@ -6,4 +6,4 @@ def validate_email(email_address,email_suffix):
     for part in email_parts:
         if " " in part:
             return False
-    return email_parts[2] == email_suffix
+    return email_parts[1] == email_suffix

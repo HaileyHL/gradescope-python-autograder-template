@@ -9,6 +9,18 @@ except Exception:
 
 
 class test_count_exact_match(unittest.TestCase):
+
+    def run_count_exact_match(self, inputs):
+        try:
+            stu = count_exact_match(inputs[0], inputs[1])
+            return stu
+        except Exception as e:
+            print(f"Error calling function with the parameters {inputs}.")
+            print("Please double check your implementation.")
+            print(f"\n--- DETAILED ERROR MESSAGE ---")
+            raise
+
+
     def assert_equal_with_message(self, test_name, expected, actual):
         try:
             self.assertEqual(actual, expected)
@@ -22,37 +34,44 @@ class test_count_exact_match(unittest.TestCase):
     # 28 points in total
     @weight(6)
     def test_1(self):
-        stu = count_exact_match("severussnape", "alanrickman")
+        inputs = ("severussnape", "alanrickman")
+        stu = self.run_count_exact_match(inputs)
         self.assert_equal_with_message("Test count_exact_match 1: severussnape, alanrickman", 2, stu)
 
     @weight(6)
     def test_2(self):
-        stu = count_exact_match("snackaverage", "stackoverflow")
+        inputs = ("snackaverage", "stackoverflow")
+        stu = self.run_count_exact_match(inputs)
         self.assert_equal_with_message("Test count_exact_match 2: snackaverage, stackoverflow", 7, stu)
 
     @weight(3)
     def test_3(self):
-        stu = count_exact_match("ABCDE", "ABCDE")
+        inputs = ("ABCDE", "ABCDE")
+        stu = self.run_count_exact_match(inputs)
         self.assert_equal_with_message("Test count_exact_match 3: ABCDE, ABCDE", 5, stu)
 
     @weight(4)
     def test_4(self):
-        stu = count_exact_match("  ABCDE  ", "ABCDE")
+        inputs = ("  ABCDE  ", "ABCDE")
+        stu = self.run_count_exact_match(inputs)
         self.assert_equal_with_message("Test count_exact_match 4:   ABCDE  (with spaces), ABCDE", 0, stu)
 
     @weight(3)
     def test_5(self):
-        stu = count_exact_match("", "alonglongstring")
+        inputs = ("", "alonglongstring")
+        stu = self.run_count_exact_match(inputs)
         self.assert_equal_with_message("Test count_exact_match 5: empty string, alonglongstring", 0, stu)
 
     @weight(3)
     def test_6(self):
-        stu = count_exact_match("", "")
+        inputs = ("", "")
+        stu = self.run_count_exact_match(inputs)
         self.assert_equal_with_message("Test count_exact_match 6: two empty strings", 0, stu)
 
     @weight(3)
     def test_7(self):
-        stu = count_exact_match("racecar", "RACECAR")
+        inputs = ("racecar", "RACECAR")
+        stu = self.run_count_exact_match(inputs)
         self.assert_equal_with_message("Test count_exact_match 7: racecar, RACECAR", 0, stu)
 
 
